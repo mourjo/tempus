@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.ratpack:ratpack-gradle:1.9.0"
+        classpath "org.kordamp.gradle:livereload-gradle-plugin:0.4.0"
+    }
+}
+
+plugins {
+    id 'java'
+    id "org.kordamp.gradle.livereload" version "0.4.0"
+}
+
+group 'me.mourjo'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+liveReload {
+    docRoot processResources.destinationDir.canonicalPath
+}
+
+apply plugin: "io.ratpack.ratpack-java"
+apply plugin: "idea"
+apply plugin: "org.kordamp.gradle.livereload"
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    implementation"org.slf4j:slf4j-simple:1.7.30"
+    implementation "org.slf4j:slf4j-reload4j:1.7.36"
+    implementation 'com.google.code.gson:gson:2.9.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+mainClassName = "me.mourjo.tempus.Launcher"
