@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Objects;
+import java.util.zip.GZIPInputStream;
 
 public class FileUtils {
 
@@ -17,7 +18,7 @@ public class FileUtils {
                 .getResourceAsStream(path);
 
         Objects.requireNonNull(inputStream);
-
-        return new CSVReaderBuilder(new BufferedReader(new InputStreamReader(inputStream))).build().readAll();
+        var reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(inputStream)));
+        return new CSVReaderBuilder(reader).build().readAll();
     }
 }

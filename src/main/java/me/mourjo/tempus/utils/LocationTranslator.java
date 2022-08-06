@@ -8,15 +8,10 @@ import java.util.*;
 import static me.mourjo.tempus.utils.StringUtils.cleanse;
 
 public class LocationTranslator {
-    private static final String WORLD_CITIES_CSV = "simplemaps_worldcities_basicv1.75/worldcities.csv";
+    private static final String WORLD_CITIES_CSV = "simplemaps_worldcities_basicv1.75/worldcities.csv.gz";
     private static LocationTranslator instance;
-    private final Map<String, Map<String, Location>> countryCityLocation;
+    private Map<String, Map<String, Location>> countryCityLocation;
     private List<String> countryNames;
-
-    LocationTranslator() throws IOException, CsvException {
-        countryCityLocation = new HashMap<>();
-        countryNames = new ArrayList<>();
-    }
 
     private static void prepareData() {
         try {
@@ -49,6 +44,13 @@ public class LocationTranslator {
     }
 
     private void loadFile() throws IOException, CsvException {
+        if (countryNames != null) {
+            return;
+        }
+
+        List<String> countries = new ArrayList<>();
+        Map<String, Map<String, Location>> locations = new HashMap<>();
+
         boolean first = true;
         for (String[] line : FileUtils.readCSVFile(WORLD_CITIES_CSV)) {
             if (!first && line.length >= 4) {
@@ -58,16 +60,18 @@ public class LocationTranslator {
                 double lng = Double.parseDouble(line[3]);
                 String country = cleanse(line[4]);
 
-                if (null == instance.countryCityLocation.putIfAbsent(country, new HashMap<>())) {
-                    instance.countryNames.add(line[4]);
+                if (null == locations.putIfAbsent(country, new HashMap<>())) {
+                    countries.add(line[4]);
                 }
 
-                instance.countryCityLocation.get(country).put(city, Location.of(lat, lng));
-                instance.countryCityLocation.get(country).put(stateOrCapital, Location.of(lat, lng));
+                locations.get(country).put(city, Location.of(lat, lng));
+                locations.get(country).put(stateOrCapital, Location.of(lat, lng));
             }
             first = false;
         }
-        Collections.sort(instance.countryNames);
-        instance.countryNames = Collections.unmodifiableList(instance.countryNames);
+
+        Collections.sort(countries);
+        instance.countryNames = Collections.unmodifiableList(countries);
+        instance.countryCityLocation = Collections.unmodifiableMap(locations);
     }
 }
