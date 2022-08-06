@@ -23,7 +23,7 @@ public class TimeHandler implements Handler {
         var params = ctx.getRequest().getQueryParams().getAll();
         if (!params.containsKey("city") || params.get("city").size() == 0 ||
                 !params.containsKey("country") || params.get("country").size() == 0) {
-            ctx.getResponse().status(Status.BAD_REQUEST).send(badRequestResponse);
+            ctx.getResponse().status(Status.NOT_FOUND).send(badRequestResponse);
             return;
         }
         var city = params.get("city").get(0);
@@ -31,7 +31,7 @@ public class TimeHandler implements Handler {
         var maybeLocation = LocationTranslator.getLatLong(country, city);
 
         if (maybeLocation.isEmpty()) {
-            ctx.getResponse().status(Status.BAD_REQUEST).send(badRequestResponse);
+            ctx.getResponse().status(Status.NOT_FOUND).send(badRequestResponse);
             return;
         }
 
@@ -41,9 +41,9 @@ public class TimeHandler implements Handler {
         getHttpClient()
                 .get(uri)
                 .map(response -> response.getBody().getText())
-                .map(t -> gson.fromJson(t, StringUtils.gsonStringTypeToken()))
-                .map(t -> Map.of("status", "ok", "data", t))
-                .then(response -> ctx.getResponse().send(gson.toJson(response)));
+                .map(txt -> gson.fromJson(txt, StringUtils.gsonStringTypeToken()))
+                .map(jsonData -> Map.of("status", "ok", "data", jsonData))
+                .then(map -> ctx.getResponse().send(gson.toJson(map)));
     }
 
     private HttpClient getHttpClient() {

@@ -10,7 +10,7 @@ import static me.mourjo.tempus.utils.StringUtils.cleanse;
 public class LocationTranslator {
     private static final String WORLD_CITIES_CSV = "simplemaps_worldcities_basicv1.75/worldcities.csv";
     private static LocationTranslator instance;
-    private Map<String, Map<String, Location>> countryCityLocation;
+    private final Map<String, Map<String, Location>> countryCityLocation;
     private List<String> countryNames;
 
     LocationTranslator() throws IOException, CsvException {

@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class CountryHandler implements Handler {
     private static final Gson gson = new Gson();
+
     @Override
     public void handle(Context ctx) {
         var data = Map.of("status", "ok", "data", LocationTranslator.getAllCountries());
