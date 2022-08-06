@@ -2,7 +2,6 @@ package me.mourjo.tempus;
 
 import me.mourjo.tempus.handlers.TimeHandler;
 import ratpack.error.ServerErrorHandler;
-import ratpack.http.MutableHeaders;
 import ratpack.http.Status;
 import ratpack.registry.Registry;
 import ratpack.server.BaseDir;

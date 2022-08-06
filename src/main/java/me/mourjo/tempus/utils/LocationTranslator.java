@@ -2,32 +2,20 @@ package me.mourjo.tempus.utils;
 
 import com.opencsv.exceptions.CsvException;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static me.mourjo.tempus.utils.StringUtils.cleanse;
 
 public class LocationTranslator {
-    private static LocationTranslator instance;
     private static final String WORLD_CITIES_CSV = "simplemaps_worldcities_basicv1.75/worldcities.csv";
+    private static LocationTranslator instance;
     Map<String, Map<String, Location>> countryCityLocation;
-     LocationTranslator() throws IOException, CsvException {
-        countryCityLocation = new HashMap<>();
-    }
 
-    private void loadFile() throws IOException, CsvException {
-        boolean first = true;
-        for (String[] line : FileUtils.readCSVFile(WORLD_CITIES_CSV)) {
-            if (!first && line.length >= 4) {
-                String city = cleanse(line[1]);
-                double lat = Double.parseDouble(line[2]);
-                double lng = Double.parseDouble(line[3]);
-                String country = cleanse(line[4]);
-                instance.countryCityLocation.putIfAbsent(country, new HashMap<>());
-                instance.countryCityLocation.get(country).put(city, Location.of(lat, lng));
-            }
-            first = false;
-        }
+    LocationTranslator() throws IOException, CsvException {
+        countryCityLocation = new HashMap<>();
     }
 
     private static void prepareData() {
@@ -53,6 +41,21 @@ public class LocationTranslator {
         }
 
         return Optional.of(instance.countryCityLocation.get(country).get(city));
+    }
+
+    private void loadFile() throws IOException, CsvException {
+        boolean first = true;
+        for (String[] line : FileUtils.readCSVFile(WORLD_CITIES_CSV)) {
+            if (!first && line.length >= 4) {
+                String city = cleanse(line[1]);
+                double lat = Double.parseDouble(line[2]);
+                double lng = Double.parseDouble(line[3]);
+                String country = cleanse(line[4]);
+                instance.countryCityLocation.putIfAbsent(country, new HashMap<>());
+                instance.countryCityLocation.get(country).put(city, Location.of(lat, lng));
+            }
+            first = false;
+        }
     }
 }
 

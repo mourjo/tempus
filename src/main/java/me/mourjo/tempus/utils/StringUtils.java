@@ -5,14 +5,14 @@ public class StringUtils {
         StringBuilder sb = new StringBuilder();
         Character last = null;
 
-        for(char c : s.toCharArray()) {
+        for (char c : s.toCharArray()) {
             if (last == null) {
                 if (c != ' ') {
                     sb.append(Character.toLowerCase(c));
                 }
-            } else if (c >= 'a' && c <= 'z'){
+            } else if (c >= 'a' && c <= 'z') {
                 sb.append(c);
-            } else if (c >= 'A' && c <= 'Z'){
+            } else if (c >= 'A' && c <= 'Z') {
                 sb.append(Character.toLowerCase(c));
             } else if (c == ' ') {
                 if (last != c) {
@@ -23,8 +23,8 @@ public class StringUtils {
             last = c;
         }
 
-        if (sb.lastIndexOf(" ") == sb.length()-1) {
-            sb.replace(sb.length()-1, sb.length(), "");
+        if (sb.lastIndexOf(" ") == sb.length() - 1) {
+            sb.replace(sb.length() - 1, sb.length(), "");
         }
 
         return sb.toString();

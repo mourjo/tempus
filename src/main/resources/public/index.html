@@ -2,29 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://mourjo.me/resources/fontawesome-5.13.0/css/all.css">
-    <link rel="stylesheet" href="https://mourjo.me/resources/css/sketch.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,562;0,600;0,700;1,400;1,500;1,562;1,600;1,700&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="https://mourjo.me/resources/images/favicon.png">
-    <meta name="description" content="Mourjo is a software engineer working on distributed systems and big data analytics. He writes code and likes to write about code. Learn more about him, read his blog posts and reach out to him for interesting opportunities.">
-    <meta name="author" content="Mourjo Sen">
-    <meta name="robots" content="all" />
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link href="https://mourjo.me/resources/fontawesome-5.13.0/css/all.css" rel="stylesheet">
+    <link href="https://mourjo.me/resources/css/sketch.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,562;0,600;0,700;1,400;1,500;1,562;1,600;1,700&family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+          rel="stylesheet">
+    <link href="https://mourjo.me/resources/images/favicon.png" rel="shortcut icon">
+    <meta content="Mourjo is a software engineer working on distributed systems and big data analytics. He writes code and likes to write about code. Learn more about him, read his blog posts and reach out to him for interesting opportunities."
+          name="description">
+    <meta content="Mourjo Sen" name="author">
+    <meta content="all" name="robots"/>
 
-    <meta property="og:title" content="Get to know Mourjo Sen!" />
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://mourjo.me" />
-    <meta property="og:image" content="resources/images/MourjoSen.jpg" />
-    <meta property="og:description" content="Mourjo is a software engineer working on distributed systems and big data analytics. He writes code and likes to write about code. Learn more about him, read his blog posts and reach out to him for interesting opportunities." />
-    <meta property="og:site_name" content="Mourjo Sen" />
-    <meta property="fb:admins" content="sen.mourjo" />
+    <meta content="Get to know Mourjo Sen!" property="og:title"/>
+    <meta content="article" property="og:type"/>
+    <meta content="https://mourjo.me" property="og:url"/>
+    <meta content="resources/images/MourjoSen.jpg" property="og:image"/>
+    <meta content="Mourjo is a software engineer working on distributed systems and big data analytics. He writes code and likes to write about code. Learn more about him, read his blog posts and reach out to him for interesting opportunities."
+          property="og:description"/>
+    <meta content="Mourjo Sen" property="og:site_name"/>
+    <meta content="sen.mourjo" property="fb:admins"/>
 
-    <meta name="twitter:card" content="Mourjo Sen" />
-    <meta name="twitter:site" content="@mourjo_sen" />
-    <meta name="twitter:title" content="Get to know Mourjo Sen!" />
-    <meta name="twitter:description" content="Mourjo is a software engineer working on distributed systems and big data analytics. He writes code and likes to write about code. Learn more about him, read his blog posts and reach out to him for interesting opportunities." />
-    <meta name="twitter:creator" content="@mourjo_sen" />
-    <meta name="twitter:image" content="resources/images/MourjoSen.jpg" />
+    <meta content="Mourjo Sen" name="twitter:card"/>
+    <meta content="@mourjo_sen" name="twitter:site"/>
+    <meta content="Get to know Mourjo Sen!" name="twitter:title"/>
+    <meta content="Mourjo is a software engineer working on distributed systems and big data analytics. He writes code and likes to write about code. Learn more about him, read his blog posts and reach out to him for interesting opportunities."
+          name="twitter:description"/>
+    <meta content="@mourjo_sen" name="twitter:creator"/>
+    <meta content="resources/images/MourjoSen.jpg" name="twitter:image"/>
     <title>Time and Timezone calculator</title>
 </head>
 <body>
@@ -36,7 +40,7 @@
             &nbsp;
             <a href="https://mourjo.me/blog/">Blog</a>
             &nbsp;
-            <a target="_blank" href="https://mourjo.me/cv.pdf">CV</a>
+            <a href="https://mourjo.me/cv.pdf" target="_blank">CV</a>
         </div>
     </div>
     <div>
@@ -46,11 +50,11 @@
                 Welcome to the Time and Timezone calculator!
             </p>
 
-            <form method="get" action="time" onsubmit="return timeSubmit(event)">
+            <form action="time" method="get" onsubmit="return timeSubmit(event)">
                 <label for="city">City:</label>
-                <input type="text" id="city" name="city"><br>
+                <input id="city" name="city" type="text"><br>
                 <label for="country">Country:</label>
-                <select name="cars" id="country"></select> <br>
+                <select id="country" name="cars"></select> <br>
                 <input type="submit" value="Go!">
             </form>
 
