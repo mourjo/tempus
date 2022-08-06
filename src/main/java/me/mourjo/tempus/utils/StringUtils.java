@@ -1,5 +1,10 @@
 package me.mourjo.tempus.utils;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.Map;
+
 public class StringUtils {
     public static String cleanse(String s) {
         StringBuilder sb = new StringBuilder();
@@ -23,10 +28,15 @@ public class StringUtils {
             last = c;
         }
 
-        if (sb.lastIndexOf(" ") == sb.length() - 1) {
+        if (sb.length() > 0 && sb.lastIndexOf(" ") == sb.length() - 1) {
             sb.replace(sb.length() - 1, sb.length(), "");
         }
 
         return sb.toString();
+    }
+
+    public static Type gsonStringTypeToken() {
+        return new TypeToken<Map<String, String>>() {
+        }.getType();
     }
 }
