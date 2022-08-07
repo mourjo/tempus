@@ -1,6 +1,7 @@
 package me.mourjo.tempus.handlers;
 
 import com.google.gson.Gson;
+import me.mourjo.tempus.utils.Environment;
 import me.mourjo.tempus.utils.HttpClientUtils;
 import me.mourjo.tempus.utils.LocationTranslator;
 import me.mourjo.tempus.utils.StringUtils;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class TimeHandler implements Handler {
     private static final String badRequestResponse = "{\"status:\":\"error\"}";
     private static final Gson gson = new Gson();
-    private static final String url = "http://api.timezonedb.com/v2.1/get-time-zone?key=3IEQDGPTOLJY&format=json&by=position&lat=%s&lng=%s";
+    private static final String url = "http://api.timezonedb.com/v2.1/get-time-zone?key=%s&format=json&by=position&lat=%s&lng=%s";
     private static HttpClient httpClient = null;
 
     @Override
@@ -36,7 +37,7 @@ public class TimeHandler implements Handler {
         }
 
         var location = maybeLocation.get();
-        var uri = URI.create(String.format(url, location.latitude, location.longitude));
+        var uri = URI.create(String.format( url, Environment.apiKey(), location.latitude, location.longitude));
 
         getHttpClient()
                 .get(uri)
