@@ -63,7 +63,8 @@ function buildTzTable(dataItems) {
 		zoneName: "Timezone",
 		abbreviation: "Abbreviated Timezone",
 		formatted: "Current Time",
-		cityName: "City Name"
+		cityName: "City Name",
+		regionName: "Region"
 	}
 
 	for (let k in data) {
