@@ -1,7 +1,7 @@
 package me.mourjo.tempus.handlers;
 
 import com.google.gson.Gson;
-import me.mourjo.tempus.utils.LocationTranslator;
+import me.mourjo.tempus.models.LocationTranslator;
 import ratpack.handling.Context;
 import ratpack.handling.Handler;
 

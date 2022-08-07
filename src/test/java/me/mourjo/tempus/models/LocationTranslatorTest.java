@@ -1,4 +1,4 @@
-package me.mourjo.tempus.utils;
+package me.mourjo.tempus.models;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,8 @@
-package me.mourjo.tempus.utils;
+package me.mourjo.tempus.models;
 
 import com.opencsv.exceptions.CsvException;
+import me.mourjo.tempus.utils.FileUtils;
+import me.mourjo.tempus.utils.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
