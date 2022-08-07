@@ -27,3 +27,5 @@ gradle-app.setting
 lib
 
 src/main/resources/simplemaps_worldcities_basicv1.75/worldcities.csv
+
+*.DS_STORE
