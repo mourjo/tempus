@@ -2,20 +2,52 @@ package me.mourjo.tempus.utils;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LocationTranslatorTest {
 
     @Test
     public void countryCityLocationTest() {
-        assertEquals(Location.of(22.5727, 88.3639), LocationTranslator.getLatLong("India", "Kolkata").get());
-        assertEquals(Location.of(41.4274, -87.9805), LocationTranslator.getLatLong("United States", "Manhattan").get());
-        assertEquals(Location.of(41.4274, -87.9805), LocationTranslator.getLatLong(" UnitEd States    ", " manhaTTAN       ").get());
+        assertTrue(LocationTranslator.getLatLong("India", "Kolkata").contains(Location.of(22.5727, 88.3639)));
+        assertTrue(LocationTranslator.getLatLong("United States", "Manhattan").contains(Location.of(41.4274, -87.9805)));
+        assertTrue(LocationTranslator.getLatLong(" UnitEd States    ", " manhaTTAN       ").contains(Location.of(41.4274, -87.9805)));
 
-        assertEquals(Optional.empty(), LocationTranslator.getLatLong("India", "Calcutta"));
-        assertEquals(Optional.empty(), LocationTranslator.getLatLong("Trantor", "Terminus"));
-        assertEquals(Optional.empty(), LocationTranslator.getLatLong("United States of AMERICA", "Kolkata"));
+        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("India", "Calcutta"));
+        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("Trantor", "Terminus"));
+        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("United States of AMERICA", "Kolkata"));
+    }
+
+    @Test
+    void globLocationTest() {
+        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("United States", "*athen"));
+        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("United States", "athe"));
+
+        for(String glob : List.of("*athe*", "*ATHe*", "*aTHE*")) {
+            var expected = new ArrayList<>(List.of(
+                    Location.of(33.825, -117.3683),
+                    Location.of(33.9508, -83.3689),
+                    Location.of(34.7847, -86.951),
+                    Location.of(39.3269, -82.0988),
+                    Location.of(35.4573, -84.6045),
+                    Location.of(32.2041, -95.8321),
+                    Location.of(38.8832, -94.8198),
+                    Location.of(32.7536, -97.7723),
+                    Location.of(35.5384, -98.6872),
+                    Location.of(33.8363, -116.4642),
+                    Location.of(33.9235, -118.3033),
+                    Location.of(37.4539, -122.2032)));
+
+            Collections.sort(expected);
+
+            var actual = LocationTranslator.getLatLong("United States", glob);
+            Collections.sort(actual);
+
+            assertEquals(expected, actual);
+        }
     }
 }

@@ -1,22 +1,16 @@
 package me.mourjo.tempus.utils;
 
-public class Location {
+public class Location implements Comparable<Location> {
     public final double latitude;
     public final double longitude;
-    public final String city;
 
-    private Location(String city, double lat, double lng) {
+    private Location(double lat, double lng) {
         this.latitude = lat;
         this.longitude = lng;
-        this.city = city;
-    }
-
-    public static Location of(String city, double lat, double lng) {
-        return new Location(city, lat, lng);
     }
 
     public static Location of(double lat, double lng) {
-        return new Location("", lat, lng);
+        return new Location(lat, lng);
     }
 
     @Override
@@ -47,5 +41,18 @@ public class Location {
                 latitude +
                 "," + longitude +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Location o) {
+        if (o == this){
+            return 0;
+        }
+
+        if (o.latitude == this.latitude) {
+            return Double.compare(this.longitude, o.longitude);
+        }
+
+        return Double.compare(this.latitude, o.latitude);
     }
 }

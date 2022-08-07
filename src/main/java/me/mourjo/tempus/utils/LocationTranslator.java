@@ -27,22 +27,21 @@ public class LocationTranslator {
         }
     }
 
-    public static List<Location> getLatLong(String country, String city) {
+    public static List<Location> getLatLong(String country, String cityGlob) {
         prepareData();
         country = cleanse(country);
-        city = cleanse(city);
-        if (!instance.countryCityLocation.containsKey(country)
-                || !instance.countryCityLocation.get(country).containsKey(city)) {
+        cityGlob = cleanse(cityGlob);
+        if (!instance.countryCityLocation.containsKey(country)) {
             return List.of();
         }
 
         var candidates = instance.countryCityLocation.get(country);
-        var pattern = StringUtils.globToRegex(city);
+        var pattern = StringUtils.globToRegex(cityGlob);
         List<Location> locations = new ArrayList<>();
 
-        for (String cityInCountry : candidates.keySet()) {
-            if(pattern.matcher(cityInCountry).matches()){
-                locations.addAll(instance.countryCityLocation.get(country).get(cityInCountry));
+        for (String candidateCity : candidates.keySet()) {
+            if(pattern.matcher(candidateCity).matches()){
+                locations.addAll(instance.countryCityLocation.get(country).get(candidateCity));
             }
         }
 
