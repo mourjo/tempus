@@ -27,7 +27,8 @@ public class Router implements Action<Chain> {
     public void execute(Chain chain) throws Exception {
         chain.get("api/v1/countries/list", CountryHandler.class);
         chain.get("api/v1/time", TimeHandler.class);
-        chain.all(ctx -> ctx.render(ctx.file("public/index.html")));
+        chain.get(ctx -> ctx.render(ctx.file("public/index.html")));
         chain.files(f -> f.dir("public"));
+        chain.all(ctx -> ctx.redirect("/"));
     }
 }
