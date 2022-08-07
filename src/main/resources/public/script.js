@@ -6,9 +6,8 @@ window.onload = async (event) => {
 	await fetch(url)
 		.then(res => res.json())
 		.then(payload => {
-			let option;
 			for (let i = 0; i < payload.data.length; i++) {
-				option = document.createElement('option');
+				let option = document.createElement('option');
 				option.text = payload.data[i];
 				option.value = payload.data[i];
 				dropdown.add(option);
@@ -45,37 +44,38 @@ async function timeSubmit(e) {
 function buildTzTable(dataItems) {
 	if (!dataItems || dataItems.length == 0) {
 		return `<table style='border: 1px solid #4b4b4b; width: 100%;'>
-    <tr>
-    <td style='border: 1px solid #4b4b4b; padding: 5px;'><b>Error</b></td>
-    <td style='border: 1px solid #4b4b4b; padding: 5px;'>Not Found</td>
-    </tr>
-    </table>`;
-	}
-	let tbl = "";
+                    <tr>
+                    <td style='border: 1px solid #4b4b4b; padding: 5px;'><b>Error</b></td>
+                    <td style='border: 1px solid #4b4b4b; padding: 5px;'>Not Found</td>
+                    </tr>
+                </table>`;
+        }
+        let tbl = "";
 
 
-	for (let data of dataItems) {
-	tbl += "<table style='border: 1px solid #4b4b4b; width: 100%;'>";
-	console.log(JSON.stringify(data));
-	let displayText = {
-		countryCode: "Country Code",
-		countryName: "Country Name",
-		zoneName: "Timezone",
-		abbreviation: "Abbreviated Timezone",
-		formatted: "Current Time",
-		cityName: "City Name",
-		regionName: "Region"
-	}
+        for (let data of dataItems) {
+        tbl += "<table style='border: 1px solid #4b4b4b; width: 100%;'>";
+        console.log(JSON.stringify(data));
+        let displayText = {
+            countryCode: "Country Code",
+            countryName: "Country Name",
+            zoneName: "Timezone",
+            abbreviation: "Abbreviated Timezone",
+            formatted: "Current Time",
+            cityName: "City Name",
+            regionName: "Region",
+            originalCity: "Locality"
+        }
 
-	for (let k in data) {
-		if (k in displayText) {
-			tbl += `<tr>`
-			tbl += `<td style='border: 1px solid #4b4b4b; padding: 5px;'><b>${displayText[k]}</b></td>`;
-			tbl += `<td style='border: 1px solid #4b4b4b; padding: 5px;'>${data[k]}</td>`;
-			tbl += `</tr>`
-		}
-	}
-	tbl += "</table><br><br>"
+        for (let k in data) {
+            if (k in displayText) {
+                tbl += `<tr>`
+                tbl += `<td style='border: 1px solid #4b4b4b; padding: 5px;'><b>${displayText[k]}</b></td>`;
+                tbl += `<td style='border: 1px solid #4b4b4b; padding: 5px;'>${data[k]}</td>`;
+                tbl += `</tr>`
+            }
+        }
+	    tbl += "</table><br><br>";
 	}
 	return tbl;
 }

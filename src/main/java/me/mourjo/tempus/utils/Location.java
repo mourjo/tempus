@@ -1,16 +1,30 @@
 package me.mourjo.tempus.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Location implements Comparable<Location> {
     public final double latitude;
     public final double longitude;
+    public final String city;
 
     private Location(double lat, double lng) {
         this.latitude = lat;
         this.longitude = lng;
+        this.city = "";
+    }
+
+    private Location(String city, double lat, double lng) {
+        this.latitude = lat;
+        this.longitude = lng;
+        this.city = StringUtils.capitalize(city);
     }
 
     public static Location of(double lat, double lng) {
         return new Location(lat, lng);
+    }
+
+    public static Location of(String city, double lat, double lng) {
+        return new Location(city, lat, lng);
     }
 
     @Override

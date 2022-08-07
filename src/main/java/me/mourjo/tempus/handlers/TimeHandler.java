@@ -73,6 +73,10 @@ public class TimeHandler implements Handler {
                 .get(uri)
                 .map(response -> response.getBody().getText())
                 .map(txt -> (Map<String, String>) gson.fromJson(txt, StringUtils.gsonStringTypeToken()))
+                .map(result -> {
+                    result.putIfAbsent("originalCity", location.city);
+                    return result;
+                })
                 .retry(retryPolicy, (x, i) -> {
                 });
     }

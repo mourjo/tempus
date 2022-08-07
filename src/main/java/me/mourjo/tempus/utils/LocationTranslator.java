@@ -77,8 +77,8 @@ public class LocationTranslator {
                 locations.get(country).putIfAbsent(city, new ArrayList<>());
                 locations.get(country).putIfAbsent(stateOrCapital, new ArrayList<>());
 
-                locations.get(country).get(city).add(Location.of(lat, lng));
-                locations.get(country).get(stateOrCapital).add(Location.of(lat, lng));
+                locations.get(country).get(city).add(Location.of(city, lat, lng));
+                locations.get(country).get(stateOrCapital).add(Location.of(stateOrCapital, lat, lng));
             }
             first = false;
         }
