@@ -45,7 +45,7 @@ public class Location implements Comparable<Location> {
 
     @Override
     public int compareTo(Location o) {
-        if (o == this){
+        if (o == this) {
             return 0;
         }
 

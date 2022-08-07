@@ -10,9 +10,15 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ServerTest {
+    public static Type typeTokenCountriesList() {
+        return new TypeToken<Map<String, Object>>() {
+        }.getType();
+    }
+
     @Test
     public void landingPageTest() throws Exception {
         var server = EmbeddedApp.fromServer(Server.buildServer());
@@ -34,17 +40,12 @@ class ServerTest {
         server.test(httpClient -> {
             var response = httpClient.get("api/v1/countries/list");
             assertEquals(Status.OK, response.getStatus());
-            var countriesResponse = (Map<String,Object>) gson.fromJson(response.getBody().getText(), typeTokenCountriesList());
+            var countriesResponse = (Map<String, Object>) gson.fromJson(response.getBody().getText(), typeTokenCountriesList());
             assertEquals("ok", countriesResponse.get("status"));
             var countries = (List<String>) countriesResponse.get("data");
             assertTrue(countries.contains("India"));
             assertTrue(countries.contains("Sweden"));
             assertTrue(countries.contains("United States"));
         });
-    }
-
-    public static Type typeTokenCountriesList() {
-        return new TypeToken<Map<String, Object>>() {
-        }.getType();
     }
 }

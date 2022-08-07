@@ -27,7 +27,7 @@ class LocationTranslatorTest {
         assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("United States", "*athen"));
         assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("United States", "athe"));
 
-        for(String glob : List.of("*athe*", "*ATHe*", "*aTHE*")) {
+        for (String glob : List.of("*athe*", "*ATHe*", "*aTHE*")) {
             var expected = new ArrayList<>(List.of(
                     Location.of(33.825, -117.3683),
                     Location.of(33.9508, -83.3689),

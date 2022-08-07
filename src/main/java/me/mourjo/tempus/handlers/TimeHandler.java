@@ -3,10 +3,8 @@ package me.mourjo.tempus.handlers;
 import com.google.gson.Gson;
 import me.mourjo.tempus.utils.*;
 import ratpack.exec.Promise;
-import ratpack.exec.util.ParallelBatch;
 import ratpack.exec.util.SerialBatch;
 import ratpack.exec.util.retry.AttemptRetryPolicy;
-import ratpack.exec.util.retry.DurationRetryPolicy;
 import ratpack.exec.util.retry.FixedDelay;
 import ratpack.exec.util.retry.RetryPolicy;
 import ratpack.handling.Context;
@@ -16,13 +14,9 @@ import ratpack.http.client.HttpClient;
 
 import java.net.URI;
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class TimeHandler implements Handler {
     private static final String badRequestResponse = "{\"status\":\"error\"}";
@@ -79,7 +73,8 @@ public class TimeHandler implements Handler {
                 .get(uri)
                 .map(response -> response.getBody().getText())
                 .map(txt -> (Map<String, String>) gson.fromJson(txt, StringUtils.gsonStringTypeToken()))
-                .retry(retryPolicy, (x,i) -> {});
+                .retry(retryPolicy, (x, i) -> {
+                });
     }
 
     private HttpClient getHttpClient() {

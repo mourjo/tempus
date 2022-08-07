@@ -40,7 +40,7 @@ public class LocationTranslator {
         List<Location> locations = new ArrayList<>();
 
         for (String candidateCity : candidates.keySet()) {
-            if(pattern.matcher(candidateCity).matches()){
+            if (pattern.matcher(candidateCity).matches()) {
                 locations.addAll(instance.countryCityLocation.get(country).get(candidateCity));
             }
         }
