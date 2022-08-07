@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ServerTest {
-    public static Type typeTokenCountriesList() {
+    public static Type typeTokenList() {
         return new TypeToken<Map<String, Object>>() {
         }.getType();
     }
@@ -40,12 +40,29 @@ class ServerTest {
         server.test(httpClient -> {
             var response = httpClient.get("api/v1/countries/list");
             assertEquals(Status.OK, response.getStatus());
-            var countriesResponse = (Map<String, Object>) gson.fromJson(response.getBody().getText(), typeTokenCountriesList());
+            var countriesResponse = (Map<String, Object>) gson.fromJson(response.getBody().getText(), typeTokenList());
             assertEquals("ok", countriesResponse.get("status"));
             var countries = (List<String>) countriesResponse.get("data");
             assertTrue(countries.contains("India"));
             assertTrue(countries.contains("Sweden"));
             assertTrue(countries.contains("United States"));
+        });
+    }
+
+    @Test
+    public void timezoneTest() throws Exception {
+        var server = EmbeddedApp.fromServer(Server.buildServer());
+        Gson gson = new Gson();
+
+        server.test(httpClient -> {
+            var response = httpClient.get("/api/v1/time?city=kolkata&country=India");
+            assertEquals(Status.OK, response.getStatus());
+            var countriesResponse = (Map<String, Object>) gson.fromJson(response.getBody().getText(), typeTokenList());
+            assertEquals("ok", countriesResponse.get("status"));
+            var timezones = (List<Map<String, String>>) countriesResponse.get("data");
+            assertEquals(1, timezones.size());
+            assertEquals("Kolkata", timezones.get(0).get("cityName"));
+            assertEquals("West Bengal", timezones.get(0).get("regionName"));
         });
     }
 }
