@@ -37,7 +37,7 @@ public class TimeHandler implements Handler {
         }
 
         var location = maybeLocation.get();
-        var uri = URI.create(String.format( url, Environment.apiKey(), location.latitude, location.longitude));
+        var uri = URI.create(String.format(url, Environment.apiKey(), location.latitude, location.longitude));
 
         getHttpClient()
                 .get(uri)

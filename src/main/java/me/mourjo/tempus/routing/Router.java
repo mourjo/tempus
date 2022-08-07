@@ -8,9 +8,9 @@ import ratpack.handling.Handler;
 import ratpack.registry.Registry;
 
 public class Router implements Action<Chain> {
-    private static Registry registry;
     private static final Handler timeHandler = new TimeHandler();
     private static final Handler countryHandler = new CountryHandler();
+    private static Registry registry;
 
     public static Registry buildRegistry() {
         if (registry == null) {
