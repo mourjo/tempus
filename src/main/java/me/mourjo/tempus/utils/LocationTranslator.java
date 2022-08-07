@@ -4,13 +4,14 @@ import com.opencsv.exceptions.CsvException;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static me.mourjo.tempus.utils.StringUtils.cleanse;
 
 public class LocationTranslator {
     private static final String WORLD_CITIES_CSV = "simplemaps_worldcities_basicv1.75/worldcities.csv.gz";
     private static LocationTranslator instance;
-    private Map<String, Map<String, Location>> countryCityLocation;
+    private Map<String, Map<String, List<Location>>> countryCityLocation;
     private List<String> countryNames;
 
     private static void prepareData() {
@@ -26,16 +27,26 @@ public class LocationTranslator {
         }
     }
 
-    public static Optional<Location> getLatLong(String country, String city) {
+    public static List<Location> getLatLong(String country, String city) {
         prepareData();
         country = cleanse(country);
         city = cleanse(city);
         if (!instance.countryCityLocation.containsKey(country)
                 || !instance.countryCityLocation.get(country).containsKey(city)) {
-            return Optional.empty();
+            return List.of();
         }
 
-        return Optional.of(instance.countryCityLocation.get(country).get(city));
+        var candidates = instance.countryCityLocation.get(country);
+        var pattern = StringUtils.globToRegex(city);
+        List<Location> locations = new ArrayList<>();
+
+        for (String cityInCountry : candidates.keySet()) {
+            if(pattern.matcher(cityInCountry).matches()){
+                locations.addAll(instance.countryCityLocation.get(country).get(cityInCountry));
+            }
+        }
+
+        return locations.stream().distinct().collect(Collectors.toList());
     }
 
     public static List<String> getAllCountries() {
@@ -49,7 +60,7 @@ public class LocationTranslator {
         }
 
         List<String> countries = new ArrayList<>();
-        Map<String, Map<String, Location>> locations = new HashMap<>();
+        Map<String, Map<String, List<Location>>> locations = new HashMap<>();
 
         boolean first = true;
         for (String[] line : FileUtils.readCSVFile(WORLD_CITIES_CSV)) {
@@ -64,8 +75,11 @@ public class LocationTranslator {
                     countries.add(line[4]);
                 }
 
-                locations.get(country).put(city, Location.of(lat, lng));
-                locations.get(country).put(stateOrCapital, Location.of(lat, lng));
+                locations.get(country).putIfAbsent(city, new ArrayList<>());
+                locations.get(country).putIfAbsent(stateOrCapital, new ArrayList<>());
+
+                locations.get(country).get(city).add(Location.of(lat, lng));
+                locations.get(country).get(stateOrCapital).add(Location.of(lat, lng));
             }
             first = false;
         }

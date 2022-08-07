@@ -10,7 +10,7 @@ public class HttpClientUtils {
     public static HttpClient buildHttpClient() {
         try {
             return HttpClient.of(config -> config
-                    .poolSize(3)
+                    .poolSize(10)
                     .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
                     .readTimeout(Duration.of(5, ChronoUnit.SECONDS)));
         } catch (Exception e) {

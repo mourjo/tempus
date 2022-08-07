@@ -42,33 +42,39 @@ async function timeSubmit(e) {
 }
 
 
-function buildTzTable(data) {
-	if (!data) {
+function buildTzTable(dataItems) {
+	if (!dataItems || dataItems.length == 0) {
 		return `<table style='border: 1px solid #4b4b4b; width: 100%;'>
     <tr>
     <td style='border: 1px solid #4b4b4b; padding: 5px;'><b>Error</b></td>
     <td style='border: 1px solid #4b4b4b; padding: 5px;'>Not Found</td>
     </tr>
     </table>`;
-
 	}
-	let tbl = "<table style='border: 1px solid #4b4b4b; width: 100%;'>";
+	let tbl = "";
+
+
+	for (let data of dataItems) {
+	tbl += "<table style='border: 1px solid #4b4b4b; width: 100%;'>";
+	console.log(JSON.stringify(data));
 	let displayText = {
 		countryCode: "Country Code",
-		countryName: "Name of Country",
+		countryName: "Country Name",
 		zoneName: "Timezone",
 		abbreviation: "Abbreviated Timezone",
-		formatted: "Current Time"
+		formatted: "Current Time",
+		cityName: "City Name"
 	}
 
 	for (let k in data) {
-		if (k in keysToShow) {
+		if (k in displayText) {
 			tbl += `<tr>`
 			tbl += `<td style='border: 1px solid #4b4b4b; padding: 5px;'><b>${displayText[k]}</b></td>`;
 			tbl += `<td style='border: 1px solid #4b4b4b; padding: 5px;'>${data[k]}</td>`;
 			tbl += `</tr>`
 		}
 	}
-	tbl += "</table>"
+	tbl += "</table><br><br>"
+	}
 	return tbl;
 }
