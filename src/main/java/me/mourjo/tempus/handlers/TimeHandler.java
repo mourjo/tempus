@@ -33,8 +33,6 @@ public class TimeHandler implements Handler {
                 return;
             }
 
-            System.out.println(locations);
-
             tzModel.getTimezones(locations)
                     .map(raw -> Map.of("status", "ok", "data", raw))
                     .then(map -> ctx.getResponse().send(gson.toJson(map)));
