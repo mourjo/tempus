@@ -1,25 +1,22 @@
 buildscript {
     repositories {
         mavenCentral()
+        gradlePluginPortal()
     }
     dependencies {
         classpath "io.ratpack:ratpack-gradle:1.9.0"
+        classpath "gradle.plugin.com.github.johnrengelman:shadow:7.1.2"
     }
 }
 
 plugins {
     id 'java'
+    id 'application'
 }
-
-group 'me.mourjo'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
-
-apply plugin: "io.ratpack.ratpack-java"
-apply plugin: "idea"
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
@@ -35,5 +32,17 @@ test {
     useJUnitPlatform()
 }
 
+jar {
+    archiveBaseName = 'tempus'
+    archiveVersion = '0.1.0'
+}
 
-mainClassName = "me.mourjo.tempus.Launcher"
+apply plugin: "io.ratpack.ratpack-java"
+apply plugin: "java"
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'application'
+
+mainClassName = 'me.mourjo.tempus.Launcher'
+
+group 'me.mourjo'
+version '1.0-SNAPSHOT'
