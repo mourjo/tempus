@@ -29,6 +29,13 @@ public class LocationTranslator {
         }
     }
 
+    /**
+     * Given a country and city glob, return matching locations
+     *
+     * @param country to search for the city in
+     * @param cityGlob to match the city in the country
+     * @return Set of locations
+     */
     public static Set<Location> getLatLong(String country, String cityGlob) {
         prepareData();
         country = cleanse(country);

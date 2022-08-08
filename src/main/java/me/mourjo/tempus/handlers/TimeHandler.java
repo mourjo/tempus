@@ -9,6 +9,10 @@ import ratpack.http.Status;
 
 import java.util.Map;
 
+
+/**
+ * Handler responsible for serving requests to convert city/country to its timezone
+ */
 public class TimeHandler implements Handler {
     private static final String badRequestResponse = "{\"status\":\"error\"}";
     private final Gson gson = new Gson();
@@ -18,8 +22,10 @@ public class TimeHandler implements Handler {
     public void handle(Context ctx) {
         try {
             var params = ctx.getRequest().getQueryParams().getAll();
-            if (!params.containsKey("city") || params.get("city").size() == 0 ||
-                    !params.containsKey("country") || params.get("country").size() == 0) {
+            if (!params.containsKey("city") ||
+                    params.get("city").size() == 0 ||
+                    !params.containsKey("country") ||
+                    params.get("country").size() == 0) {
                 ctx.getResponse().status(Status.NOT_FOUND).send(badRequestResponse);
                 return;
             }
@@ -33,6 +39,7 @@ public class TimeHandler implements Handler {
                 return;
             }
 
+            // the model returns a promise, respond to the user when the promise is ready
             tzModel.getTimezones(locations)
                     .map(raw -> Map.of("status", "ok", "data", raw))
                     .then(map -> ctx.getResponse().send(gson.toJson(map)));

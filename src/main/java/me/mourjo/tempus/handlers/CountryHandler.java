@@ -7,6 +7,10 @@ import ratpack.handling.Handler;
 
 import java.util.Map;
 
+
+/**
+ * Computes the list of available countries in the Locations data file
+ */
 public class CountryHandler implements Handler {
     private static final Gson gson = new Gson();
 

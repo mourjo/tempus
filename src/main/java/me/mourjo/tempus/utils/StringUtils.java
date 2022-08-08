@@ -1,12 +1,14 @@
 package me.mourjo.tempus.utils;
 
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class StringUtils {
+    /**
+     * Convert a string to lower case, trim spaces, remove non-letter characters except * and space
+     *
+     * @param s input string to be cleansed
+     * @return cleansed string
+     */
     public static String cleanse(String s) {
         StringBuilder sb = new StringBuilder();
         Character last = null;
@@ -38,11 +40,12 @@ public class StringUtils {
         return sb.toString();
     }
 
-    public static Type gsonStringTypeToken() {
-        return new TypeToken<Map<String, String>>() {
-        }.getType();
-    }
-
+    /**
+     * Convert a string from a glob to a regex
+     *
+     * @param glob to be converted to regex
+     * @return regex corresponding to the glob
+     */
     public static Pattern globToRegex(String glob) {
         // taken from https://stackoverflow.com/questions/1247772/is-there-an-equivalent-of-java-util-regex-for-glob-type-patterns
         StringBuilder out = new StringBuilder("^");
