@@ -6,11 +6,11 @@ import me.mourjo.tempus.utils.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static me.mourjo.tempus.utils.StringUtils.cleanse;
 
 public class LocationTranslator {
+    public static final int MAX_LOCATIONS = 15;
     private static final String WORLD_CITIES_CSV = "simplemaps_worldcities_basicv1.75/worldcities.csv.gz";
     private static LocationTranslator instance;
     private Map<String, Map<String, List<Location>>> countryCityLocation;
@@ -29,25 +29,30 @@ public class LocationTranslator {
         }
     }
 
-    public static List<Location> getLatLong(String country, String cityGlob) {
+    public static Set<Location> getLatLong(String country, String cityGlob) {
         prepareData();
         country = cleanse(country);
         cityGlob = cleanse(cityGlob);
         if (!instance.countryCityLocation.containsKey(country)) {
-            return List.of();
+            return Set.of();
         }
 
         var candidates = instance.countryCityLocation.get(country);
         var pattern = StringUtils.globToRegex(cityGlob);
-        List<Location> locations = new ArrayList<>();
+        Set<Location> locations = new HashSet<>();
 
         for (String candidateCity : candidates.keySet()) {
             if (pattern.matcher(candidateCity).matches()) {
-                locations.addAll(instance.countryCityLocation.get(country).get(candidateCity));
+                for (var location : instance.countryCityLocation.get(country).get(candidateCity)) {
+                    if (locations.size() >= MAX_LOCATIONS) {
+                        return locations;
+                    }
+                    locations.add(location);
+                }
             }
         }
 
-        return locations.stream().distinct().collect(Collectors.toList());
+        return locations;
     }
 
     public static List<String> getAllCountries() {

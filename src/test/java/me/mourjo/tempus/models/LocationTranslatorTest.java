@@ -2,9 +2,9 @@ package me.mourjo.tempus.models;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,18 +17,18 @@ class LocationTranslatorTest {
         assertTrue(LocationTranslator.getLatLong("United States", "Manhattan").contains(Location.of(41.4274, -87.9805)));
         assertTrue(LocationTranslator.getLatLong(" UnitEd States    ", " manhaTTAN       ").contains(Location.of(41.4274, -87.9805)));
 
-        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("India", "Calcutta"));
-        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("Trantor", "Terminus"));
-        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("United States of AMERICA", "Kolkata"));
+        assertEquals(new HashSet<>(), LocationTranslator.getLatLong("India", "Calcutta"));
+        assertEquals(new HashSet<>(), LocationTranslator.getLatLong("Trantor", "Terminus"));
+        assertEquals(new HashSet<>(), LocationTranslator.getLatLong("United States of AMERICA", "Kolkata"));
     }
 
     @Test
     void globLocationTest() {
-        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("United States", "*athen"));
-        assertEquals(new ArrayList<>(), LocationTranslator.getLatLong("United States", "athe"));
+        assertEquals(new HashSet<>(), LocationTranslator.getLatLong("United States", "*athen"));
+        assertEquals(new HashSet<>(), LocationTranslator.getLatLong("United States", "athe"));
 
         for (String glob : List.of("*athe*", "*ATHe*", "*aTHE*")) {
-            var expected = new ArrayList<>(List.of(
+            var expected = Set.of(
                     Location.of(33.825, -117.3683),
                     Location.of(33.9508, -83.3689),
                     Location.of(34.7847, -86.951),
@@ -40,13 +40,9 @@ class LocationTranslatorTest {
                     Location.of(35.5384, -98.6872),
                     Location.of(33.8363, -116.4642),
                     Location.of(33.9235, -118.3033),
-                    Location.of(37.4539, -122.2032)));
-
-            Collections.sort(expected);
+                    Location.of(37.4539, -122.2032));
 
             var actual = LocationTranslator.getLatLong("United States", glob);
-            Collections.sort(actual);
-
             assertEquals(expected, actual);
         }
     }

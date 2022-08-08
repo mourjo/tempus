@@ -1,19 +1,14 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
         classpath "io.ratpack:ratpack-gradle:1.9.0"
-        classpath "org.kordamp.gradle:livereload-gradle-plugin:0.4.0"
     }
 }
 
 plugins {
     id 'java'
-    id "org.kordamp.gradle.livereload" version "0.4.0"
 }
 
 group 'me.mourjo'
@@ -23,13 +18,8 @@ repositories {
     mavenCentral()
 }
 
-liveReload {
-    docRoot processResources.destinationDir.canonicalPath
-}
-
 apply plugin: "io.ratpack.ratpack-java"
 apply plugin: "idea"
-apply plugin: "org.kordamp.gradle.livereload"
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
@@ -39,7 +29,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.1'
     implementation 'com.opencsv:opencsv:5.6'
     implementation 'io.ratpack:ratpack-core:1.9.0'
-
 }
 
 test {

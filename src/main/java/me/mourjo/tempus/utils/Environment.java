@@ -6,7 +6,7 @@ public class Environment {
     private static final String ENV_PORT = "PORT";
     private static final String ENV_API_KEY = "API_KEY";
 
-    public static int getPort() {
+    public static int port() {
         try {
             String port = System.getenv(ENV_PORT);
             if (port != null) {

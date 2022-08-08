@@ -9,7 +9,7 @@ public class Server {
     public static RatpackServer buildServer() {
         try {
             return RatpackServer.of(spec -> spec
-                    .serverConfig(c -> c.baseDir(BaseDir.find()).port(Environment.getPort()))
+                    .serverConfig(c -> c.baseDir(BaseDir.find()).port(Environment.port()))
                     .registry(Router.buildRegistry())
                     .handlers(new Router()));
         } catch (Exception e) {

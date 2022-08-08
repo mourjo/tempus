@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class TimeHandler implements Handler {
     private static final String badRequestResponse = "{\"status\":\"error\"}";
-    private static final Gson gson = new Gson();
-
+    private final Gson gson = new Gson();
+    private final TimezoneDB tzModel = new TimezoneDB();
 
     @Override
     public void handle(Context ctx) {
@@ -33,7 +33,9 @@ public class TimeHandler implements Handler {
                 return;
             }
 
-            TimezoneDB.getTimezones(locations)
+            System.out.println(locations);
+
+            tzModel.getTimezones(locations)
                     .map(raw -> Map.of("status", "ok", "data", raw))
                     .then(map -> ctx.getResponse().send(gson.toJson(map)));
         } catch (Exception e) {
